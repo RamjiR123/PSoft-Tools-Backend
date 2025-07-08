@@ -1,4 +1,5 @@
-// backend/src/index.ts
+//backend/src/index.ts
+//will add documentation
 import express, { Express, RequestHandler } from "express";
 import { verifyDafny, runDafny } from "./runDafny";
 import { forwardSympy } from "./runSympy";
@@ -9,7 +10,6 @@ import bodyParser from "body-parser";
 const app: Express = express();
 const port = 3000;
 
-// Manual CORS headers to allow cross-origin requests from Vite dev server
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
   res.setHeader("Access-Control-Allow-Methods", "GET,POST,OPTIONS");
@@ -20,13 +20,13 @@ app.use((req, res, next) => {
   next();
 });
 
-// Simple request logger
+
 const logRequest: RequestHandler = (req, res, next) => {
   next();
 };
 
 app.use(logRequest);
-// Parse plain text bodies for all POST routes
+
 app.use(bodyParser.text({ type: "text/plain" }));
 
 app.post("/verify", (req, res) => {
