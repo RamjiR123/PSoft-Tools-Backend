@@ -1,5 +1,4 @@
 //backend/src/index.ts
-//will add documentation
 import express, { Express, RequestHandler } from "express";
 import { verifyDafny, runDafny } from "./runDafny";
 import { forwardSympy } from "./runSympy";
