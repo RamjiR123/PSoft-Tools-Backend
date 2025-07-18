@@ -1,7 +1,7 @@
 //backend/src/index.ts
 import express, { Express, RequestHandler } from "express";
 import { verifyDafny, runDafny } from "./runDafny";
-import { forwardSympy } from "./runSympy";
+import { forwardSympy, backwardSympy } from "./runSympy";
 import { writeFileSync } from "fs";
 import { exec } from "child_process";
 import bodyParser from "body-parser";
@@ -68,6 +68,24 @@ app.post("/forward", (req, res) => {
     .then((output) => res.send(output)) //expected output
     .catch((err) => {
       console.error("SymPy execution error:", err); //error output
+      res.status(500).send(err.toString());
+    });
+});
+
+//sends formatted input to sympy python runner and returns result
+//also checks if user-input is of proper format. returns error if not
+app.post("/backward", (req, res) => {
+  const input = req.body as string;
+  const match = input.match(/^\s*(.*?)\s*\{([^}]*)\}\s*$/);
+  if (!match) {
+    return res.status(400)
+      .send("Invalid backward-reasoning format: expected 'statement {postcondition}'\n"); //user syntax error
+  }
+  const [, stmt, post] = match;
+  backwardSympy(stmt, post)
+    .then(output => res.send(output)) //expected output
+    .catch(err => {
+      console.error("Backward SymPy execution error:", err); //error output
       res.status(500).send(err.toString());
     });
 });
