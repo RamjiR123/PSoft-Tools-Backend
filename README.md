@@ -7,7 +7,7 @@ Hosts an environment to verify and run Dafny code.
 Hosts an environment to verify Hoare Triples that have been translated to Dafny code.
 ### Forward Reasoning
 Hosts an environment to produce the strongest postcondition from a given precondition and Java code.
-### Backward Reasoning *(Under Development)*
+### Backward Reasoning
 Hosts an environment to produce the weakest precondition from a given postcondition and Java code.
 ### Control Flow Graphs *(Under Development)*
 Provides a tool that generates a control-flow graph from given Java code.
